@@ -13,7 +13,8 @@ namespace tthk_xamarin_game
     {
         Image img;
         Grid ground;
-        Button restartbtn;
+        Button restartbtn, clearbutton;
+        Label CrossOrZero;
         static int player;
         public MainPage()
         {
@@ -45,39 +46,64 @@ namespace tthk_xamarin_game
 
             restartbtn = new Button()
             {
-                Text = "Reset",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = "X || O",
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
             restartbtn.Clicked += RestartbtnOnClicked;
+            
+            clearbutton = new Button()
+            {
+                Text = "Новая игра",
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+            clearbutton.Clicked += ClearbuttonOnClicked;
 
             StackLayout BtnLayout = new StackLayout()
             {
                 Orientation = StackOrientation.Horizontal,
-                Children = { restartbtn }
+                Children = { restartbtn, clearbutton }
+            };
+
+            CrossOrZero = new Label()
+            {
+                TextColor = Color.White
             };
 
             StackLayout MainLayout = new StackLayout()
             {
-                Children = { ground, BtnLayout }
+                Children = { ground, BtnLayout, CrossOrZero }
             };
             
             Content = MainLayout;
         }
 
+        private void ClearbuttonOnClicked(object sender, EventArgs e)
+        {
+            
+        }
+
         private void RestartbtnOnClicked(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            
             player = rnd.Next(1, 3);
-            restartbtn.Text = player.ToString();
-            
+            if (player == 1)
+            {
+                DisplayAlert("X || O ", "Первый начинает X", "ок");
+            }
+            else
+            {
+                DisplayAlert("X || O ", "Первый начинает O", "ок");
+            }
+
         }
 
         private void TapOnTapped(object sender, EventArgs e)
         {
             Image img = sender as Image;
+            var imageSource = (Image)sender;//get image source here
+            var selectedImage = imageSource.Source as FileImageSource;
 
-            if (img.Source == ImageSource.FromFile("empty.png"))
+            if (selectedImage == "empty.png")
             {
                 if (player == 1)
                 {
