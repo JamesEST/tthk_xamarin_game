@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.Markup;
 
 namespace tthk_xamarin_game
 {
@@ -13,10 +14,9 @@ namespace tthk_xamarin_game
         Image img;
         Grid ground;
         Button restartbtn;
+        static int player;
         public MainPage()
         {
-
-
             ground = new Grid()
             {
                 HeightRequest = 400
@@ -34,11 +34,11 @@ namespace tthk_xamarin_game
                     img = new Image
                     {
                         HeightRequest = 125,
-                        Source = "krestik.png"
+                        Source = "empty.png"
                     };
-
-                    ground.Children.Add(img, i, j);
                     var tap = new TapGestureRecognizer();
+                    tap.Tapped += TapOnTapped;
+                    ground.Children.Add(img, i, j);
                     img.GestureRecognizers.Add(tap);  
                 }
             }
@@ -46,8 +46,9 @@ namespace tthk_xamarin_game
             restartbtn = new Button()
             {
                 Text = "Reset",
-                HorizontalOptions = LayoutOptions.FillAndExpand
+                HorizontalOptions = LayoutOptions.FillAndExpand,
             };
+            restartbtn.Clicked += RestartbtnOnClicked;
 
             StackLayout BtnLayout = new StackLayout()
             {
@@ -59,10 +60,42 @@ namespace tthk_xamarin_game
             {
                 Children = { ground, BtnLayout }
             };
-
+            
             Content = MainLayout;
+        }
 
+        private void RestartbtnOnClicked(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            
+            player = rnd.Next(1, 3);
+            restartbtn.Text = player.ToString();
+            
+        }
+
+        private void TapOnTapped(object sender, EventArgs e)
+        {
+            Image img = sender as Image;
+
+            if (img.Source == ImageSource.FromFile("empty.png"))
+            {
+                if (player == 1)
+                {
+                    img.Source = ImageSource.FromFile("krestik.png");
+                    player = 2;
+                }
+                else if (player == 2)
+                {
+                    img.Source = ImageSource.FromFile("nolik.png");
+                    player = 1;
+                }
+            }
+            else
+            {
+                DisplayAlert ("Занята", "Здесь нельза поставить", "ок");
+            }
 
         }
     }
 }
+

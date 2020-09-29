@@ -68,6 +68,8 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\krestik.png" />
+    <AndroidResource Include="Resources\drawable\nolik.png" />
     <AndroidResource Include="Resources\layout\Tabbar.xml" />
     <AndroidResource Include="Resources\layout\Toolbar.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
@@ -90,12 +92,6 @@
       <Project>{7A0CEE8E-D464-4FE9-AC08-09985BFF8F6E}</Project>
       <Name>tthk_xamarin_game</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\krestik.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\nolik.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\empty.png" />
