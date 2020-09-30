@@ -16,33 +16,14 @@ namespace tthk_xamarin_game
         Button restartbtn, clearbutton;
         Label CrossOrZero;
         static int player;
+        int[,] WinOrLose = new int[3,3];
         public MainPage()
         {
-            ground = new Grid()
-            {
-                HeightRequest = 400
-            };
-            for (int i = 0; i < 3; i++)
-            {
-                ground.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                ground.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
+            PlayGround();
 
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    img = new Image
-                    {
-                        HeightRequest = 125,
-                        Source = "empty.png"
-                    };
-                    var tap = new TapGestureRecognizer();
-                    tap.Tapped += TapOnTapped;
-                    ground.Children.Add(img, i, j);
-                    img.GestureRecognizers.Add(tap);  
-                }
-            }
+
+            
+
 
             restartbtn = new Button()
             {
@@ -76,10 +57,56 @@ namespace tthk_xamarin_game
             
             Content = MainLayout;
         }
+        private void PlayGround()
+        {
+            ground = new Grid()
+            {
+                HeightRequest = 400
+            };
+            for (int i = 0; i < 3; i++)
+            {
+                ground.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                ground.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    img = new Image
+                    {
+
+                        HeightRequest = 125,
+                        Source = "empty.png"
+                    };
+                    WinOrLose[i, j] = 0;
+                    var tap = new TapGestureRecognizer();
+                    tap.Tapped += TapOnTapped;
+                    ground.Children.Add(img, i, j);
+                    img.GestureRecognizers.Add(tap);
+                }
+            }
+        }
 
         private void ClearbuttonOnClicked(object sender, EventArgs e)
         {
-            
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    img = new Image
+                    {
+                        HeightRequest = 125,
+                        Source = "empty.png"
+                    };
+                    var tap = new TapGestureRecognizer();
+                    tap.Tapped += TapOnTapped;
+                    ground.Children.Add(img, i, j);
+                    img.GestureRecognizers.Add(tap);
+                }
+            }
+            restartbtn.Opacity = 1;
+            player = 0;
         }
 
         private void RestartbtnOnClicked(object sender, EventArgs e)
@@ -94,13 +121,14 @@ namespace tthk_xamarin_game
             {
                 DisplayAlert("X || O ", "Первый начинает O", "ок");
             }
+            restartbtn.Opacity = 0;
 
         }
 
         private void TapOnTapped(object sender, EventArgs e)
         {
             Image img = sender as Image;
-            var imageSource = (Image)sender;//get image source here
+            var imageSource = (Image)sender;
             var selectedImage = imageSource.Source as FileImageSource;
 
             if (selectedImage == "empty.png")
@@ -108,11 +136,13 @@ namespace tthk_xamarin_game
                 if (player == 1)
                 {
                     img.Source = ImageSource.FromFile("krestik.png");
+                    WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 1;
                     player = 2;
                 }
                 else if (player == 2)
                 {
                     img.Source = ImageSource.FromFile("nolik.png");
+                    WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 2;
                     player = 1;
                 }
             }
@@ -120,8 +150,22 @@ namespace tthk_xamarin_game
             {
                 DisplayAlert ("Занята", "Здесь нельза поставить", "ок");
             }
-
         }
+        public int WinCheck()
+        {
+            int win = 0;
+
+            if(WinOrLose[0,0] == 1 && WinOrLose[0,1] == 1 && WinOrLose[0,2] == 1)
+            {
+                win = 1;
+            }
+            else
+            {
+
+            }
+            return win;
+        }
+        
     }
 }
 
