@@ -109,6 +109,15 @@ namespace tthk_xamarin_game
             }
             restartbtn.Opacity = 1;
             player = 0;
+            flag = 0;
+
+            for (int y = 0; y < 3; y++)
+            {
+                for (int x = 0; x < 3; x++)
+                {
+                    WinOrLose[y, x] = 0;
+                }
+            } 
         }
 
         private void RestartbtnOnClicked(object sender, EventArgs e)
@@ -179,7 +188,53 @@ namespace tthk_xamarin_game
                 {
                     flag = 1;
                 }
-           
+                 else if (WinOrLose[0,0] == 1 && WinOrLose[1,0] == 1 && WinOrLose[2,0] == 1)
+                {
+                    flag = 1;
+                }
+                else if (WinOrLose[0,1] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,1] == 1)
+                {
+                    flag = 1;
+                }
+                else if (WinOrLose[0,2] == 1 && WinOrLose[1,2] == 1 && WinOrLose[2,2] == 1)
+                {
+                    flag = 1;
+                }
+
+                //2
+                else if (WinOrLose[0, 0] == 2 && WinOrLose[0, 1] == 2 && WinOrLose[0, 2] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[1, 0] == 2 && WinOrLose[1, 1] == 2 && WinOrLose[1, 2] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[2, 0] == 2 && WinOrLose[2, 1] == 2 && WinOrLose[2, 2] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[0, 0] == 2 && WinOrLose[1, 1] == 2 && WinOrLose[2, 2] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[0, 2] == 2 && WinOrLose[1, 1] == 2 && WinOrLose[2, 0] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[0, 0] == 2 && WinOrLose[1, 0] == 2 && WinOrLose[2, 0] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[0, 1] == 2 && WinOrLose[1, 1] == 2 && WinOrLose[2, 1] == 2)
+                {
+                    flag = 2;
+                }
+                else if (WinOrLose[0, 2] == 2 && WinOrLose[1, 2] == 1 && WinOrLose[2, 2] == 2)
+                {
+                    flag = 2;
+                }
+
             return flag;
         }
         public void CheckTheWinner()
@@ -190,9 +245,9 @@ namespace tthk_xamarin_game
             {
                 DisplayAlert("Победа", "Выйграл X", "Ок");
             }
-            else
+            else if (flag == 2)
             {
-                
+                DisplayAlert("Победа", "Выйграл O", "Ок");
             }
         }
     }
