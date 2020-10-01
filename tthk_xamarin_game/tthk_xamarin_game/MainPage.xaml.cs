@@ -138,12 +138,14 @@ namespace tthk_xamarin_game
                     img.Source = ImageSource.FromFile("krestik.png");
                     WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 1;
                     player = 2;
+                    WinCheck()
                 }
                 else if (player == 2)
                 {
                     img.Source = ImageSource.FromFile("nolik.png");
                     WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 2;
                     player = 1;
+                    WinCheck()
                 }
             }
             else
@@ -155,13 +157,57 @@ namespace tthk_xamarin_game
         {
             int win = 0;
 
+            if (win == 0)
+            {
+                if(WinOrLose[0,0] == 1 && WinOrLose[0,1] == 1 && WinOrLose[0,2] == 1)
+                {
+                    win = 1;
+                }
+                else if (WinOrLose[1,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[1,2] == 1)
+                {
+                    win = 1;
+                }
+                else if (WinOrLose[2,0] == 1 && WinOrLose[2,1] == 1 && WinOrLose [2,2] == 1)
+                {
+                    win = 1;
+                }
+                else if (WinOrLose[0,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,2] == 1)
+                {
+                    win = 1;
+                }
+                else if (WinOrLose[0,2] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,0] == 1)
+                {
+                    win = 1;
+                }
+                
+                return win;
+            }
+            else if (win == 1)
+            {
+                DisplayAlert ("Победа", "X выйграл", "ок");
+            }
+
+
+
             if(WinOrLose[0,0] == 1 && WinOrLose[0,1] == 1 && WinOrLose[0,2] == 1)
             {
                 win = 1;
             }
-            else
+            else if (WinOrLose[1,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[1,2] == 1)
             {
-
+                win = 1;
+            }
+            else if (WinOrLose[2,0] == 1 && WinOrLose[2,1] == 1 && WinOrLose [2,2] == 1)
+            {
+                win = 1;
+            }
+            else if (WinOrLose[0,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,2] == 1)
+            {
+                win = 1;
+            }
+            else if (WinOrLose[0,2] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,0] == 1)
+            {
+                win = 1;
             }
             return win;
         }
