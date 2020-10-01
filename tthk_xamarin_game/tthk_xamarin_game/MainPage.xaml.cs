@@ -17,12 +17,14 @@ namespace tthk_xamarin_game
         Label CrossOrZero;
         static int player;
         int[,] WinOrLose = new int[3,3];
+        static int flag = 0;
         public MainPage()
         {
             PlayGround();
-
-
             
+
+
+
 
 
             restartbtn = new Button()
@@ -138,14 +140,16 @@ namespace tthk_xamarin_game
                     img.Source = ImageSource.FromFile("krestik.png");
                     WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 1;
                     player = 2;
-                    WinCheck()
+                    WinCheck();
+                    CheckTheWinner();
                 }
                 else if (player == 2)
                 {
                     img.Source = ImageSource.FromFile("nolik.png");
                     WinOrLose[Grid.GetRow(img), Grid.GetColumn(img)] = 2;
                     player = 1;
-                    WinCheck()
+                    WinCheck();
+                    CheckTheWinner();
                 }
             }
             else
@@ -155,63 +159,42 @@ namespace tthk_xamarin_game
         }
         public int WinCheck()
         {
-            int win = 0;
-
-            if (win == 0)
-            {
                 if(WinOrLose[0,0] == 1 && WinOrLose[0,1] == 1 && WinOrLose[0,2] == 1)
                 {
-                    win = 1;
+                    flag = 1;
                 }
                 else if (WinOrLose[1,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[1,2] == 1)
                 {
-                    win = 1;
+                    flag = 1;
                 }
                 else if (WinOrLose[2,0] == 1 && WinOrLose[2,1] == 1 && WinOrLose [2,2] == 1)
                 {
-                    win = 1;
+                    flag = 1;
                 }
                 else if (WinOrLose[0,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,2] == 1)
                 {
-                    win = 1;
+                    flag = 1;
                 }
                 else if (WinOrLose[0,2] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,0] == 1)
                 {
-                    win = 1;
+                    flag = 1;
                 }
-                
-                return win;
-            }
-            else if (win == 1)
-            {
-                DisplayAlert ("Победа", "X выйграл", "ок");
-            }
-
-
-
-            if(WinOrLose[0,0] == 1 && WinOrLose[0,1] == 1 && WinOrLose[0,2] == 1)
-            {
-                win = 1;
-            }
-            else if (WinOrLose[1,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[1,2] == 1)
-            {
-                win = 1;
-            }
-            else if (WinOrLose[2,0] == 1 && WinOrLose[2,1] == 1 && WinOrLose [2,2] == 1)
-            {
-                win = 1;
-            }
-            else if (WinOrLose[0,0] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,2] == 1)
-            {
-                win = 1;
-            }
-            else if (WinOrLose[0,2] == 1 && WinOrLose[1,1] == 1 && WinOrLose[2,0] == 1)
-            {
-                win = 1;
-            }
-            return win;
+           
+            return flag;
         }
-        
+        public void CheckTheWinner()
+        {
+            flag = WinCheck();
+
+            if (flag == 1)
+            {
+                DisplayAlert("Победа", "Выйграл X", "Ок");
+            }
+            else
+            {
+                
+            }
+        }
     }
 }
 
